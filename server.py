@@ -8,12 +8,17 @@ def detect_emotion():
 
     text_to_analyze = request.args.get('textToAnalyze')
     emotions = emotion_detector(text_to_analyze)
+
+    dominant_emotion = emotions['dominant_emotion']
+    if dominant_emotion is None:
+        return "<b>Invalid text! Please try again!</b>"
+
     return (
         f"For the given statement, the system response is"
         f"'anger': {emotions['anger']}, 'disgust': {emotions['disgust']}, "
         f"'fear': {emotions['fear']}, 'joy': {emotions['joy']}"
         f" and 'sadness': {emotions['sadness']}. "
-        f"The dominant emotion is <strong>{emotions['dominant_emotion']}</strong>."
+        f"The dominant emotion is <strong>{dominant_emotion}</strong>."
     )
 
 @app.route('/')
